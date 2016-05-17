@@ -66,6 +66,17 @@ public final class Primitives {
   }
 
   /**
+   * Returns true if type1 and type2 are either the same type or one is the wrapper form of other.
+   *   For example, long.class is equivalent to Long.class.
+   * type1 or type2 shouldn't be null.
+   */
+  public static boolean areEquivalentTypes(Type type1, Type type2) {
+    return type1.equals(type2)
+        || type2.equals(PRIMITIVE_TO_WRAPPER_TYPE.get(type1))
+        || type2.equals(WRAPPER_TO_PRIMITIVE_TYPE.get(type1));
+  }
+
+  /**
    * Returns true if this type is a primitive.
    */
   public static boolean isPrimitive(Type type) {

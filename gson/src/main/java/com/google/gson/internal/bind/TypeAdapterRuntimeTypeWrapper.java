@@ -17,6 +17,7 @@ package com.google.gson.internal.bind;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.internal.Primitives;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -51,7 +52,7 @@ final class TypeAdapterRuntimeTypeWrapper<T> extends TypeAdapter<T> {
 
     TypeAdapter chosen = delegate;
     Type runtimeType = getRuntimeTypeIfMoreSpecific(type, value);
-    if (runtimeType != type) {
+    if (runtimeType != type && !Primitives.areEquivalentTypes(runtimeType, type)) {
       TypeAdapter runtimeTypeAdapter = context.getAdapter(TypeToken.get(runtimeType));
       if (!(runtimeTypeAdapter instanceof ReflectiveTypeAdapterFactory.Adapter)) {
         // The user registered a type adapter for the runtime type, so we will use that
